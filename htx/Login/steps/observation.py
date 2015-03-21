@@ -1,4 +1,5 @@
 from behave import *
+from htx.Login.TestMethods.selenium import findAllCSS
 
 use_step_matcher("re")
 
@@ -10,11 +11,3 @@ def step_impl(context, text):
     assert text in context.driver.page_source
     pass
 
-
-@Then("i should not see (?P<text>.*)")
-def step_impl(context,text):
-    """
-    :type context behave.runner.Context
-    """
-    assert text not in context.driver.page_source
-    pass
