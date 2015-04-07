@@ -1,6 +1,7 @@
 Feature: Login
+
   Scenario: visit tbx
-   When logged out
+    When logged out
     Then its shows log in Page
 
   Scenario: visit tbx

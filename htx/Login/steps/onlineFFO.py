@@ -3,6 +3,10 @@ from htx.Login.TestMethods.selenium import *
 
 use_step_matcher("re")
 
+def allFFOs(context):
+    all_css = findAllCSS(context, "#offo>tbody>tr>td>label")
+    return all_css
+
 
 def addFFO(context, ffo):
     wait(context)
@@ -69,6 +73,7 @@ def findFFO(context, ffo):
 def removeFFO(context, ffo):
     writeById(context, "addOffo", ffo)
     press(context, "remove")
+    wait(context)
 
 
 @step('remove "(?P<ffo>.*)" from onlineFulfillment')
@@ -124,4 +129,25 @@ def step_impl(context):
     :type context behave.runner.Context
     """
     press(context, "save")
+    pass
+
+
+
+@when("all onlineFFO are deleted")
+def step_impl(context):
+    """
+    :type context behave.runner.Context
+    """
+    all_text = [y.text for y in allFFOs(context)]
+    for ffo in all_text:
+        removeFFO(context, ffo)
+    pass
+
+
+@then("no onlineFFO are shown")
+def step_impl(context):
+    """
+    :type context behave.runner.Context
+    """
+    assert not allFFOs(context)
     pass

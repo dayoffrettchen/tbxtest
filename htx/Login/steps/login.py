@@ -1,6 +1,9 @@
 from behave import *
+
 from htx.Login.TestMethods.login import logIn, siteContains
-from htx.Login.TestMethods.selenium import visit, press, visitNOWAIT
+from htx.Login.TestMethods.selenium import visit, press
+from htx.Login.steps.navigation import visitSite
+
 
 use_step_matcher("re")
 
@@ -11,6 +14,7 @@ def login(context):
 
 @When("logged out")
 def logedOut(context):
+    logOut(context)
     pass
 
 
@@ -46,9 +50,6 @@ def step_impl(context):
 
 @given("as '(?P<login>.*)' logged in")
 def step_impl(context, login):
-    """
-    :type context behave.runner.Context
-    """
     if isLoggedIn(context):
         logOut(context)
     logIn(context, login)
@@ -59,6 +60,6 @@ def step_impl(context, site):
     """
     :type context behave.runner.Context
     """
-    visitNOWAIT(context,site)
+    visitSite(context, site, wait=False)
     assert "403" in context.driver.page_source
     pass

@@ -8,7 +8,6 @@ def logIn(context, login="ba@nemesese.de"):
     writeById(context, "j_username", login)
     writeById(context, "j_password", "test1234")
     press(context, "login")
-    wait(context)
 
 
 def visit(context, site):
