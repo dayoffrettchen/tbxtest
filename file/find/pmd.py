@@ -11,9 +11,10 @@ __author__ = 'christoph'
 start = "/home/dume/tapina/"
 
 parser = argparse.ArgumentParser(description="optional to write")
+parser.add_argument("--print", dest="prnt",  type=bool, help="if u want to print everything the file", default=False)
 parser.add_argument("--write", dest="write",  type=bool, help="if u want to write the file", default=False)
+prnt = parser.parse_args().prnt
 write = parser.parse_args().write
-print(write)
 
 call(["ant", "pmd"])
 tree = ET.parse(start + xml)
@@ -31,6 +32,10 @@ for file in tree.getroot():
             toWrite += ( ": " + file.get("name") + "(" + violation.get("beginline") + "," + violation.get(
                 'endline') + ")[" + violation.get('rule') + "] " )
         toWrite += "\n"
+
+if prnt:
+    print(toWrite)
+
 old_ = start + "pmd_old"
 new_ = start + "pmd_new"
 toWriteFile = open(new_, "w+")
